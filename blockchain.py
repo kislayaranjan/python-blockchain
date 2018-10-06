@@ -1,3 +1,7 @@
+import hashlib
+import json
+from time import time
+
 class Blockchain( object ):
     """
     Skeleton of Blockchain model

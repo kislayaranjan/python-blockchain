@@ -9,7 +9,8 @@ class Blockchain( object ):
     def __init__(self):
         self.chain = []
         self.current_transactions = []
-    
+        self.difficulty = 4
+
         #create genesis block
         self.new_block(previous_hash=1,proof=100) 
 
@@ -51,7 +52,7 @@ class Blockchain( object ):
         self.current_transactions.append(new_trx)
         return self.last_block['index'] + 1
 
-        @staticmethod
+    @staticmethod
     def hash(block):
         """
         Creates a SHA-256 of a block
@@ -72,3 +73,32 @@ class Blockchain( object ):
         Returns last block in the chain
         """
         return self.chain[-1]
+
+    def proof_of_work(self, last_proof):
+        """
+        Proof of Work Algorithm:
+        -   Find x such that hash(xx') has self.difficulty leading zeros
+        -   x is new_proof and x' is last_proof
+        :param last_proof: <int>
+        :return: <int> proof
+        """
+
+        proof = 0
+
+        while self.valid_proof(last_proof,proof) is False:
+            proof += 1
+        
+        return proof
+    
+    @staticmethod
+    def valid_proof(self,last_proof, proof):
+        """
+        Validates the Proof: Does hash(last_proof, proof) contain 4 leading zeroes?
+        :param last_proof: <int> Previous Proof
+        :param proof: <int> Current Proof
+        :return: <bool> True if correct, False if not.
+        """
+        guess = f'{last_proof}{proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        prefix = "0" * self.difficulty
+        return guess[:self.difficulty] == prefix

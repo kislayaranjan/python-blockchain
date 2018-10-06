@@ -55,4 +55,4 @@ class Blockchain( object ):
         """
         Returns last block in the chain
         """
-        pass
+        return self.chain[-1]

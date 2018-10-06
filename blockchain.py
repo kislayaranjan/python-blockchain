@@ -9,10 +9,10 @@ class Blockchain( object ):
     """
     Skeleton of Blockchain model
     """
+    difficulty = 4
     def __init__(self):
         self.chain = []
         self.current_transactions = []
-        self.difficulty = 4
 
         #create genesis block
         self.new_block(previous_hash=1,proof=100) 
@@ -103,8 +103,8 @@ class Blockchain( object ):
         """
         guess = f'{last_proof}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
-        prefix = "0" * self.difficulty
-        return guess[:self.difficulty] == prefix
+        prefix = "0" * difficulty
+        return guess[:difficulty] == prefix
 
 # Instantiate our Node
 app = Flask(__name__)

@@ -103,8 +103,8 @@ class Blockchain( object ):
         """
         guess = f'{last_proof}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
-        prefix = "0" * difficulty
-        return guess[:difficulty] == prefix
+        prefix = "0" * Blockchain.difficulty
+        return guess[:Blockchain.difficulty] == prefix
 
 # Instantiate our Node
 app = Flask(__name__)

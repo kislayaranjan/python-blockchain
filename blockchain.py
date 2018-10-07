@@ -6,6 +6,7 @@ from uuid import uuid4
 from flask import Flask, jsonify, request
 from urllib.parse import urlparse
 import requests
+import argparse
 
 class Blockchain( object ):
     """
@@ -210,7 +211,6 @@ def mine():
 @app.route('/transactions/new', methods=['POST'])
 def new_transaction():
     values = request.get_json()
-
     required = ['sender', 'recipient', 'amount']
 
     # check for required params 
@@ -266,4 +266,7 @@ def consensus():
     return jsonify(response), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("port",type=int)
+    args = parser.parse_args()
+    app.run(host='0.0.0.0', port=args.port)
